@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -10,20 +11,21 @@ namespace BetterGameEngine.Input
     public class InputKey
     {
         public bool isActive = true;
+        public bool isHeld = false;
         public enum type
         {
             Action,
             State,
             Range
         };
-        public type assignedContext { get; set; }
+        public type assignedType { get; set; }
         public Keys key { get; set; }
         public List<string> context { get; set; }
 
         public InputKey(Keys _key, type _type)
         {
             this.key = _key;
-            this.assignedContext = _type;
+            this.assignedType = _type;
             this.context = new List<string>();
         }
 
@@ -31,7 +33,23 @@ namespace BetterGameEngine.Input
         public Trigger trigger;
         public void InternAction(float _range = 1)
         {
-            trigger(_range);
+            if(assignedType == type.Action)
+            {
+                trigger(_range);
+            }
+            else
+            {
+                isHeld = true;
+                Task.Run(()=> triggerHold(_range));
+            }
+        }
+
+        private void triggerHold(float _range = 1)
+        {
+            while(isHeld)
+            {
+                trigger(_range);
+            }
         }
     }
 }

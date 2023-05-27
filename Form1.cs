@@ -25,5 +25,10 @@ namespace BetterGameEngine
             //Console.WriteLine($"Form1::KeyDown({e.KeyValue.ToString()})");
             InputManager.syncInputs(e);
         }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            InputManager.syncKeyUp(e);
+        }
     }
 }
