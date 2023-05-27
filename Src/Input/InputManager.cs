@@ -74,5 +74,48 @@ namespace BetterGameEngine.Input
             }
         }
 
+        public static void syncMouseInputs(MouseEventArgs e, int _type)
+        {
+            if(!activeContextUpdated)
+                getKeysWithContext(ActiveContext);
+
+            foreach(InputMouse m in activeKeys.OfType<InputMouse>())
+            {
+                if(m.isActive)
+                {
+                    if(m.mouseButtonType == (InputMouse.mouseType)_type)
+                    {
+                        if(_type != 2)
+                            m.InternAction();
+                        else
+                            m.InternAction(e.Delta/120);
+
+                        if(m.assignedType == InputKey.type.Action && _type != 2)
+                        {
+                            m.isActive = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void syncMouseUp(MouseEventArgs e, int _type)
+        {
+            if(!activeContextUpdated)
+                getKeysWithContext(ActiveContext);
+
+            foreach(InputMouse m in activeKeys.OfType<InputMouse>())
+            {
+                if(m.isActive && m.mouseButtonType == (InputMouse.mouseType)_type)
+                {
+                    m.isHeld = false;
+                }
+                if(m.assignedType == InputKey.type.Action)
+                {
+                    m.isActive = true;
+                }
+            }
+        }
+
     }
 }

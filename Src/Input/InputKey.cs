@@ -22,7 +22,7 @@ namespace BetterGameEngine.Input
         public Keys key { get; set; }
         public List<string> context { get; set; }
 
-        public InputKey(Keys _key, type _type)
+        public InputKey(type _type, Keys _key = Keys.None)
         {
             this.key = _key;
             this.assignedType = _type;
