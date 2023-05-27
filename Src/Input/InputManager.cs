@@ -48,6 +48,28 @@ namespace BetterGameEngine.Input
                 if (key.isActive && e.KeyCode == key.key)
                 {
                     key.InternAction();
+                    if(key.assignedType == InputKey.type.Action)
+                    {
+                        key.isActive = false;
+                    }
+                }
+            }
+        }
+
+        public static void syncKeyUp(KeyEventArgs e)
+        {
+            if(!activeContextUpdated)
+                getKeysWithContext(ActiveContext);
+
+            foreach(InputKey key in activeKeys)
+            {
+                if(key.isActive && e.KeyCode == key.key)
+                {
+                    key.isHeld = false;
+                }
+                if(key.assignedType == InputKey.type.Action)
+                {
+                    key.isActive = true;
                 }
             }
         }

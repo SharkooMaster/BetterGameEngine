@@ -24,7 +24,15 @@ namespace BetterGameEngine.Assets.Scripts
             });
             player_moveForward.context.Add("Player");
 
+            InputKey player_moveRight = new InputKey(System.Windows.Forms.Keys.D, InputKey.type.State);
+            player_moveRight.trigger = new InputKey.Trigger((range) =>
+            {
+                Console.WriteLine($"Player::Right::{range}");
+            });
+            player_moveRight.context.Add("Player");
+
             InputManager.inputKeys.Add(player_moveForward);
+            InputManager.inputKeys.Add(player_moveRight);
         }
     }
 }
