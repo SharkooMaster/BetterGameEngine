@@ -17,6 +17,7 @@ namespace BetterGameEngine
         public Form1()
         {
             InitializeComponent();
+            this.MouseWheel += new MouseEventHandler(Form1_MouseWheel);
             Game.init();
         }
 
@@ -29,6 +30,35 @@ namespace BetterGameEngine
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             InputManager.syncKeyUp(e);
+        }
+
+        private void Form1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            InputManager.syncMouseInputs(e, 2);
+        }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Left)
+            {
+                InputManager.syncMouseInputs(e, 0);
+            }
+            if(e.Button == MouseButtons.Right)
+            {
+                InputManager.syncMouseInputs(e, 1);
+            }
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Left)
+            {
+                InputManager.syncMouseUp(e, 0);
+            }
+            if(e.Button == MouseButtons.Right)
+            {
+                InputManager.syncMouseUp(e, 1);
+            }
         }
     }
 }

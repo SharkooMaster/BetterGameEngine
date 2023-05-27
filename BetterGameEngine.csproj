@@ -60,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\Input\InputKey.cs" />
     <Compile Include="Src\Input\InputManager.cs" />
+    <Compile Include="Src\Input\InputMouse.cs" />
     <Compile Include="Src\Utils\GenerateRuntimeEnum.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
