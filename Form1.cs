@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BetterGameEngine.Assets.Scripts;
+using BetterGameEngine.Gui;
 using BetterGameEngine.Input;
+using BetterGameEngine.Utils;
 
 namespace BetterGameEngine
 {
@@ -17,8 +19,26 @@ namespace BetterGameEngine
         public Form1()
         {
             InitializeComponent();
+
             this.MouseWheel += new MouseEventHandler(Form1_MouseWheel);
+        }
+
+        protected override void OnResizeEnd(EventArgs e)
+        {
+            base.OnResizeEnd(e);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
             Game.init();
+            base.OnLoad(e);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Canvas.GRAPHICS = CreateGraphics();
+            Canvas.drawGUI();
+            base.OnPaint(e);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
