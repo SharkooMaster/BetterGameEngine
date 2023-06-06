@@ -7,6 +7,7 @@ using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 
 namespace BetterGameEngine.Assets.Scripts
 {
@@ -87,6 +88,18 @@ namespace BetterGameEngine.Assets.Scripts
             header2.height = 100;
             header2.backgroundColor = Color.Blue;
             header2.dock = GuiLayer.dock.C;
+            header2.padding = 10;
+
+            GuiComponent headerText = new GuiComponent();
+            headerText.width = 100;
+            headerText.height = 30;
+            headerText.backgroundColor = Color.Transparent;
+            headerText.dock = GuiLayer.dock.BR;
+            headerText.trigger = () =>
+            {
+                Canvas.GRAPHICS.DrawString("Header", new Font(FontFamily.GenericSansSerif, 20.0f, FontStyle.Bold), Brushes.White, headerText.position.x, headerText.position.y);
+            };
+            header2.children.Add(headerText);
 
             settings.components.Add(header);
             settings.components.Add(header2);
