@@ -22,6 +22,7 @@ namespace BetterGameEngine.Gui
         {
             foreach (var component in components)
             {
+                component.calculatePosition();
                 component.draw();
             }
         }

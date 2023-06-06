@@ -62,17 +62,34 @@ namespace BetterGameEngine.Assets.Scripts
             btn.width = 150;
             btn.height = 50;
             btn.backgroundColor = Color.Black;
+            btn.dock = GuiLayer.dock.BR;
+
+            GuiComponent btn2 = new GuiComponent();
+            btn2.width = 150;
+            btn2.height = 50;
+            btn2.backgroundColor = Color.Black;
+            btn2.dock = GuiLayer.dock.BL;
 
             menue.components.Add(btn);
+            menue.components.Add(btn2);
             Canvas.Layers.Add(menue);
 
             GuiLayer settings = new GuiLayer();
+
             GuiComponent header = new GuiComponent();
             header.width = 300;
             header.height = 100;
             header.backgroundColor = Color.Blue;
+            header.dock = GuiLayer.dock.BC;
+
+            GuiComponent header2 = new GuiComponent();
+            header2.width = 300;
+            header2.height = 100;
+            header2.backgroundColor = Color.Blue;
+            header2.dock = GuiLayer.dock.C;
 
             settings.components.Add(header);
+            settings.components.Add(header2);
 
             Canvas.Layers.Add(settings);
             Canvas.activeLayer = 0;

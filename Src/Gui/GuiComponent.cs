@@ -40,13 +40,47 @@ namespace BetterGameEngine.Gui
             }
         }
 
-        private void calculatePosition()
+        public void calculatePosition()
         {
+            switch(dock)
+            {
+                case GuiLayer.dock.TL:
+                    position = new Vector2(0, 0);
+                    break;
+                case GuiLayer.dock.TC:
+                    position = new Vector2(Convert.ToInt32(Canvas.WIDTH / 2), 0);
+                    break;
+                case GuiLayer.dock.TR:
+                    position = new Vector2(Canvas.WIDTH, 0);
+                    break;
+                case GuiLayer.dock.CL:
+                    position = new Vector2(0, Convert.ToInt32(Canvas.HEIGHT/2) - (height/2));
+                    break;
+                case GuiLayer.dock.C:
+                    position = new Vector2(Convert.ToInt32(Canvas.WIDTH/2) - (width/2), Convert.ToInt32(Canvas.HEIGHT/2) - (height/2));
+                    break;
+                case GuiLayer.dock.CR:
+                    position = new Vector2(Canvas.WIDTH, Convert.ToInt32(Canvas.HEIGHT/2) - (height/2));
+                    break;
+                case GuiLayer.dock.BL:
+                    position = new Vector2(0, Canvas.HEIGHT - (height));
+                    break;
+                case GuiLayer.dock.BC:
+                    position = new Vector2(Convert.ToInt32(Canvas.WIDTH/2) - (width/2), Canvas.HEIGHT - (height));
+                    break;
+                case GuiLayer.dock.BR:
+                    position = new Vector2(Canvas.WIDTH - width, Canvas.HEIGHT - (height));
+                    break;
+                default:
+                    position = new Vector2(0, 0);
+                    break;
+            }
         }
 
         public void draw()
         {
-            Canvas.GRAPHICS.FillRectangle(new SolidBrush(backgroundColor), new Rectangle(0, 0, width, height));
+            Rectangle rect = Rectangle.Round(new Rectangle((int)position.x, (int)position.y, width, height));
+            Canvas.GRAPHICS.FillRectangle(new SolidBrush(backgroundColor), rect);
         }
 
     }

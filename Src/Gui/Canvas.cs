@@ -10,6 +10,8 @@ namespace BetterGameEngine.Gui
     public static class Canvas
     {
         public static Graphics GRAPHICS;
+        public static int WIDTH;
+        public static int HEIGHT;
         public static List<GuiLayer> Layers = new List<GuiLayer>();
 
         public static int ActiveLayer = -1;
@@ -26,7 +28,10 @@ namespace BetterGameEngine.Gui
         {
             GRAPHICS.Clear(Color.White);
             // Render game here;
-            Layers[ActiveLayer].render();
+            if(activeLayer != -1)
+            {
+                Layers[ActiveLayer].render();
+            }
         }
     }
 }

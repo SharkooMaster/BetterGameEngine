@@ -25,11 +25,21 @@ namespace BetterGameEngine
 
         protected override void OnResizeEnd(EventArgs e)
         {
+            Canvas.GRAPHICS = CreateGraphics();
+            Canvas.WIDTH = (int)Canvas.GRAPHICS.VisibleClipBounds.Width;
+            Canvas.HEIGHT = (int)Canvas.GRAPHICS.VisibleClipBounds.Height;
+            Console.WriteLine(Canvas.WIDTH);
+            Console.WriteLine(Canvas.HEIGHT);
+            Canvas.drawGUI();
             base.OnResizeEnd(e);
         }
 
         protected override void OnLoad(EventArgs e)
         {
+            Canvas.GRAPHICS = CreateGraphics();
+            Canvas.WIDTH = (int)Canvas.GRAPHICS.VisibleClipBounds.Width;
+            Canvas.HEIGHT = (int)Canvas.GRAPHICS.VisibleClipBounds.Height;
+            Canvas.drawGUI();
             Game.init();
             base.OnLoad(e);
         }
@@ -37,6 +47,9 @@ namespace BetterGameEngine
         protected override void OnPaint(PaintEventArgs e)
         {
             Canvas.GRAPHICS = CreateGraphics();
+            Canvas.WIDTH = (int)Canvas.GRAPHICS.VisibleClipBounds.Width;
+            Canvas.HEIGHT = (int)Canvas.GRAPHICS.VisibleClipBounds.Height;
+
             Canvas.drawGUI();
             base.OnPaint(e);
         }
