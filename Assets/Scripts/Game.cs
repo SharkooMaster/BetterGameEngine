@@ -1,5 +1,6 @@
 ﻿using BetterGameEngine.Gui;
 using BetterGameEngine.Input;
+using BetterGameEngine.Src.Gui.Components;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -59,21 +60,43 @@ namespace BetterGameEngine.Assets.Scripts
             // Draw GUI
             GuiLayer menue = new GuiLayer();
 
-            GuiComponent btn = new GuiComponent();
-            btn.width = 150;
-            btn.height = 50;
-            btn.backgroundColor = Color.Black;
-            btn.dock = GuiLayer.dock.BR;
+            BGE_ButtonFilled bGE_ButtonFilled = new BGE_ButtonFilled(Canvas.BGE_RED, Canvas.BGE_RED_HOVER);
+            bGE_ButtonFilled.dock = GuiLayer.dock.TL;
 
-            GuiComponent btn2 = new GuiComponent();
-            btn2.width = 150;
-            btn2.height = 50;
-            btn2.backgroundColor = Color.Black;
-            btn2.dock = GuiLayer.dock.BL;
-            btn2.zIndex = 1;
+            BGE_ButtonFilled bGE_ButtonFilled4 = new BGE_ButtonFilled(Canvas.BGE_ORANGE, Canvas.BGE_ORANGE_HOVER);
+            bGE_ButtonFilled4.dock = GuiLayer.dock.TL;
+            bGE_ButtonFilled4.margin_T = 70;
 
-            menue.components.Add(btn);
-            menue.components.Add(btn2);
+            BGE_ButtonFilled bGE_ButtonFilled2 = new BGE_ButtonFilled(Canvas.BGE_YELLOW, Canvas.BGE_YELLOW_HOVER);
+            bGE_ButtonFilled2.dock = GuiLayer.dock.TC;
+
+            BGE_ButtonFilled bGE_ButtonFilled3 = new BGE_ButtonFilled(Canvas.BGE_GREEN, Canvas.BGE_GREEN_HOVER);
+            bGE_ButtonFilled3.dock = GuiLayer.dock.TC;
+            bGE_ButtonFilled3.margin_T = 70;
+
+            BGE_ButtonFilled bGE_ButtonFilled5 = new BGE_ButtonFilled(Canvas.BGE_BLUE, Canvas.BGE_BLUE_HOVER);
+            bGE_ButtonFilled5.dock = GuiLayer.dock.TR;
+
+            BGE_ButtonFilled bGE_ButtonFilled6 = new BGE_ButtonFilled(Canvas.BGE_PINK, Canvas.BGE_PINK_HOVER);
+            bGE_ButtonFilled6.dock = GuiLayer.dock.TR;
+            bGE_ButtonFilled6.margin_T = 70;
+
+            BGE_ButtonFilled bGE_ButtonFilled7 = new BGE_ButtonFilled(Canvas.BGE_PURPLE, Canvas.BGE_PURPLE_HOVER);
+            bGE_ButtonFilled7.dock = GuiLayer.dock.CL;
+
+            BGE_ButtonFilled bGE_ButtonFilled8 = new BGE_ButtonFilled(Canvas.BGE_WHITE, Canvas.BGE_WHITE_HOVER);
+            bGE_ButtonFilled8.dock = GuiLayer.dock.C;
+            bGE_ButtonFilled8.roundedRadius_TL = 10;
+            bGE_ButtonFilled8.roundedRadius_TR = 10;
+
+            menue.components.Add(bGE_ButtonFilled);
+            menue.components.Add(bGE_ButtonFilled2);
+            menue.components.Add(bGE_ButtonFilled3);
+            menue.components.Add(bGE_ButtonFilled4);
+            menue.components.Add(bGE_ButtonFilled5);
+            menue.components.Add(bGE_ButtonFilled6);
+            menue.components.Add(bGE_ButtonFilled7);
+            menue.components.Add(bGE_ButtonFilled8);
             Canvas.Layers.Add(menue);
 
             GuiLayer settings = new GuiLayer();

@@ -156,11 +156,51 @@ namespace BetterGameEngine.Gui
             position.y += parentPosition.y;
         }
 
+        public Rectangle rect = new Rectangle();
+
+        private void genRect()
+        {
+            if(roundedRadius_TL != 0)
+            {
+                rect.X = (int)position.x + roundedRadius_TL;
+                rect.Y = (int)position.y + roundedRadius_TL;
+                rect.Width  -= roundedRadius_TL;
+                rect.Height -= roundedRadius_TL;
+                Canvas.GRAPHICS.FillEllipse(
+                    new SolidBrush(backgroundColor),
+                    rect.X - roundedRadius_TL,
+                    rect.Y - roundedRadius_TL,
+                    roundedRadius_TL + roundedRadius_TL,
+                    roundedRadius_TL + roundedRadius_TL
+                );
+
+                Canvas.GRAPHICS.FillRectangle(
+                    new SolidBrush(backgroundColor),
+                    new Rectangle(rect.X - roundedRadius_TL, rect.Y, roundedRadius_TL, rect.Height)
+                );
+
+                Canvas.GRAPHICS.FillRectangle(
+                    new SolidBrush(backgroundColor),
+                    new Rectangle(rect.X, rect.Y - roundedRadius_TL, rect.Width, roundedRadius_TL)
+                );
+            }
+            if(roundedRadius_TR != 0)
+            {
+            }
+            if(roundedRadius_BL != 0)
+            {
+            }
+            if(roundedRadius_BR != 0)
+            {
+            }
+        }
+
         public void draw()
         {
             parentScale = new Vector2(Canvas.WIDTH, Canvas.HEIGHT);
-            Rectangle rect = Rectangle.Round(new Rectangle((int)position.x, (int)position.y, width, height));
-            Canvas.GRAPHICS.FillRectangle(new SolidBrush(backgroundColor), rect);
+            rect = new Rectangle((int)position.x, (int)position.y, width, height);
+            genRect();
+            Canvas.GRAPHICS.FillRectangle(new SolidBrush(backgroundColor), Rectangle.Round(rect));
             customDraw();
 
             int i = 0;

@@ -59,6 +59,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\Gui\Canvas.cs" />
+    <Compile Include="Src\Gui\Components\BGE_ButtonFilled.cs" />
+    <Compile Include="Src\Gui\Components\BGE_Text.cs" />
     <Compile Include="Src\Gui\GuiComponent.cs" />
     <Compile Include="Src\Gui\GuiLayer.cs" />
     <Compile Include="Src\Input\InputKey.cs" />
