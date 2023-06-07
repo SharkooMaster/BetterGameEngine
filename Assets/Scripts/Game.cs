@@ -1,10 +1,13 @@
-﻿using BetterGameEngine.Input;
+﻿using BetterGameEngine.Gui;
+using BetterGameEngine.Input;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 
 namespace BetterGameEngine.Assets.Scripts
 {
@@ -20,6 +23,8 @@ namespace BetterGameEngine.Assets.Scripts
             player_moveForward.trigger = new InputKey.Trigger((range) =>
             {
                 Console.WriteLine($"Player::Forward::{range}");
+                Canvas.activeLayer = (Canvas.activeLayer == 0) ? 1 : 0;
+                Canvas.drawGUI();
                 //InputManager.activeContext = InputManager.contexts[1];
             });
             player_moveForward.context.Add("Player");
@@ -30,6 +35,7 @@ namespace BetterGameEngine.Assets.Scripts
                 Console.WriteLine($"Player::Right::{range}");
             });
             player_moveRight.context.Add("Player");
+            player_moveRight.context.Add("Vehicle");
 
             InputMouse player_zoom = new InputMouse(InputKey.type.Action, InputMouse.mouseType.scr);
             player_zoom.trigger = new InputKey.Trigger((range) =>
@@ -49,6 +55,61 @@ namespace BetterGameEngine.Assets.Scripts
             InputManager.inputKeys.Add(player_moveRight);
             InputManager.inputKeys.Add(player_zoom);
             InputManager.inputKeys.Add(player_shoot);
+
+            // Draw GUI
+            GuiLayer menue = new GuiLayer();
+
+            GuiComponent btn = new GuiComponent();
+            btn.width = 150;
+            btn.height = 50;
+            btn.backgroundColor = Color.Black;
+            btn.dock = GuiLayer.dock.BR;
+
+            GuiComponent btn2 = new GuiComponent();
+            btn2.width = 150;
+            btn2.height = 50;
+            btn2.backgroundColor = Color.Black;
+            btn2.dock = GuiLayer.dock.BL;
+            btn2.zIndex = 1;
+
+            menue.components.Add(btn);
+            menue.components.Add(btn2);
+            Canvas.Layers.Add(menue);
+
+            GuiLayer settings = new GuiLayer();
+
+            GuiComponent header = new GuiComponent();
+            header.width = 300;
+            header.height = 100;
+            header.backgroundColor = Color.Blue;
+            header.dock = GuiLayer.dock.BL;
+
+            GuiComponent header2 = new GuiComponent();
+            header2.width = 300;
+            header2.height = 100;
+            header2.backgroundColor = Color.Blue;
+            header2.dock = GuiLayer.dock.C;
+            header2.padding = 0;
+            header2.trigger = () => { Canvas.ActiveLayer = 0; };
+            header2.onHover = () => { header2.backgroundColor = Color.Red; };
+            header2.onHoverEnd = () => { header2.backgroundColor = Color.Blue; };
+
+            GuiComponent headerText = new GuiComponent();
+            headerText.width = 100;
+            headerText.height = 30;
+            headerText.backgroundColor = Color.Transparent;
+            headerText.dock = GuiLayer.dock.C;
+            headerText.customDraw = () =>
+            {
+                Canvas.GRAPHICS.DrawString("Header", new Font(FontFamily.GenericSansSerif, 20.0f, FontStyle.Bold), Brushes.White, headerText.position.x, headerText.position.y);
+            };
+            header2.children.Add(headerText);
+
+            settings.components.Add(header);
+            settings.components.Add(header2);
+
+            Canvas.Layers.Add(settings);
+            Canvas.activeLayer = 0;
         }
     }
 }

@@ -58,10 +58,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\Gui\Canvas.cs" />
+    <Compile Include="Src\Gui\GuiComponent.cs" />
+    <Compile Include="Src\Gui\GuiLayer.cs" />
     <Compile Include="Src\Input\InputKey.cs" />
     <Compile Include="Src\Input\InputManager.cs" />
     <Compile Include="Src\Input\InputMouse.cs" />
+    <Compile Include="Src\MathB\Matrix.cs" />
+    <Compile Include="Src\MathB\Matrix2x2.cs" />
+    <Compile Include="Src\MathB\Vector2.cs" />
     <Compile Include="Src\Utils\GenerateRuntimeEnum.cs" />
+    <Compile Include="Src\Utils\uColor.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

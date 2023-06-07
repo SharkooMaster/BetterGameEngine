@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BetterGameEngine.Assets.Scripts;
+using BetterGameEngine.Gui;
 using BetterGameEngine.Input;
+using BetterGameEngine.Utils;
 
 namespace BetterGameEngine
 {
@@ -17,8 +19,39 @@ namespace BetterGameEngine
         public Form1()
         {
             InitializeComponent();
+
             this.MouseWheel += new MouseEventHandler(Form1_MouseWheel);
+        }
+
+        protected override void OnResizeEnd(EventArgs e)
+        {
+            Canvas.GRAPHICS = CreateGraphics();
+            Canvas.WIDTH = (int)Canvas.GRAPHICS.VisibleClipBounds.Width;
+            Canvas.HEIGHT = (int)Canvas.GRAPHICS.VisibleClipBounds.Height;
+
+            Canvas.drawGUI();
+            base.OnResizeEnd(e);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            Canvas.GRAPHICS = CreateGraphics();
+            Canvas.WIDTH = (int)Canvas.GRAPHICS.VisibleClipBounds.Width;
+            Canvas.HEIGHT = (int)Canvas.GRAPHICS.VisibleClipBounds.Height;
+
+            Canvas.drawGUI();
             Game.init();
+            base.OnLoad(e);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Canvas.GRAPHICS = CreateGraphics();
+            Canvas.WIDTH = (int)Canvas.GRAPHICS.VisibleClipBounds.Width;
+            Canvas.HEIGHT = (int)Canvas.GRAPHICS.VisibleClipBounds.Height;
+
+            Canvas.drawGUI();
+            base.OnPaint(e);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -42,6 +75,12 @@ namespace BetterGameEngine
             if(e.Button == MouseButtons.Left)
             {
                 InputManager.syncMouseInputs(e, 0);
+                GuiComponent comp = Canvas.Layers[Canvas.activeLayer].componentInRange;
+                if(comp != null)
+                {
+                    comp.trigger();
+                    Canvas.drawGUI();
+                }
             }
             if(e.Button == MouseButtons.Right)
             {
@@ -59,6 +98,16 @@ namespace BetterGameEngine
             {
                 InputManager.syncMouseUp(e, 1);
             }
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            InputManager.mousePosition.x = e.X;
+            InputManager.mousePosition.y = e.Y;
+
+            Canvas.Layers[Canvas.activeLayer].mouseInRange();
+
+            //Console.WriteLine($"mx: {InputManager.mousePosition.x}, my: {InputManager.mousePosition.y}");
         }
     }
 }
