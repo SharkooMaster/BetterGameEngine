@@ -70,6 +70,7 @@ namespace BetterGameEngine.Assets.Scripts
             btn2.height = 50;
             btn2.backgroundColor = Color.Black;
             btn2.dock = GuiLayer.dock.BL;
+            btn2.zIndex = 1;
 
             menue.components.Add(btn);
             menue.components.Add(btn2);
@@ -81,21 +82,24 @@ namespace BetterGameEngine.Assets.Scripts
             header.width = 300;
             header.height = 100;
             header.backgroundColor = Color.Blue;
-            header.dock = GuiLayer.dock.BC;
+            header.dock = GuiLayer.dock.BL;
 
             GuiComponent header2 = new GuiComponent();
             header2.width = 300;
             header2.height = 100;
             header2.backgroundColor = Color.Blue;
             header2.dock = GuiLayer.dock.C;
-            header2.padding = 10;
+            header2.padding = 0;
+            header2.trigger = () => { Canvas.ActiveLayer = 0; };
+            header2.onHover = () => { header2.backgroundColor = Color.Red; };
+            header2.onHoverEnd = () => { header2.backgroundColor = Color.Blue; };
 
             GuiComponent headerText = new GuiComponent();
             headerText.width = 100;
             headerText.height = 30;
             headerText.backgroundColor = Color.Transparent;
-            headerText.dock = GuiLayer.dock.BR;
-            headerText.trigger = () =>
+            headerText.dock = GuiLayer.dock.C;
+            headerText.customDraw = () =>
             {
                 Canvas.GRAPHICS.DrawString("Header", new Font(FontFamily.GenericSansSerif, 20.0f, FontStyle.Bold), Brushes.White, headerText.position.x, headerText.position.y);
             };

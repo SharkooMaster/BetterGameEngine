@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BetterGameEngine.Gui
 {
@@ -24,9 +25,24 @@ namespace BetterGameEngine.Gui
         public GuiLayer.dock dock;
 
         public delegate void Trigger();
+        public Trigger customDraw;
         public Trigger trigger;
+        public Trigger onHover;
+        public Trigger onHoverEnd;
 
         // Design variables
+        public enum Display
+        {
+            block, flex
+        }
+        public Display display;
+
+        public enum FlexDirection
+        {
+            row, column
+        }
+        public FlexDirection flexDirection;
+
         public Color backgroundColor;
 
         public int roundedRadius_TL;
@@ -74,15 +90,22 @@ namespace BetterGameEngine.Gui
             }
         }
 
+        public bool autoWidth = false;
+        public bool autoHeight = false;
 
         public GuiComponent()
         {
+            customDraw = () => { };
             trigger = () => { };
+            onHover = () => { };
+            onHoverEnd = () => { };
+            //this.MouseClick += new MouseEventHandler(trigger);
+            //this.MouseHover += new EventHandler(onHover);
         }
 
         public void calculatePosition()
         {
-            if(parent == null) { parent = new GuiComponent(); }
+            if(parent == null) { parent = new GuiComponent(); parent.padding = 0; parent.margin = 0; }
             switch(dock)
             {
                 case GuiLayer.dock.TL:
@@ -135,17 +158,21 @@ namespace BetterGameEngine.Gui
 
         public void draw()
         {
+            parentScale = new Vector2(Canvas.WIDTH, Canvas.HEIGHT);
             Rectangle rect = Rectangle.Round(new Rectangle((int)position.x, (int)position.y, width, height));
             Canvas.GRAPHICS.FillRectangle(new SolidBrush(backgroundColor), rect);
-            trigger();
+            customDraw();
 
+            int i = 0;
             foreach(var _child in children)
             {
+                _child.id = i;
                 _child.parent = this;
                 _child.parentPosition = position;
                 _child.parentScale = new Vector2(width, height);
                 _child.calculatePosition();
                 _child.draw();
+                i++;
             }
         }
 

@@ -28,8 +28,7 @@ namespace BetterGameEngine
             Canvas.GRAPHICS = CreateGraphics();
             Canvas.WIDTH = (int)Canvas.GRAPHICS.VisibleClipBounds.Width;
             Canvas.HEIGHT = (int)Canvas.GRAPHICS.VisibleClipBounds.Height;
-            Console.WriteLine(Canvas.WIDTH);
-            Console.WriteLine(Canvas.HEIGHT);
+
             Canvas.drawGUI();
             base.OnResizeEnd(e);
         }
@@ -39,6 +38,7 @@ namespace BetterGameEngine
             Canvas.GRAPHICS = CreateGraphics();
             Canvas.WIDTH = (int)Canvas.GRAPHICS.VisibleClipBounds.Width;
             Canvas.HEIGHT = (int)Canvas.GRAPHICS.VisibleClipBounds.Height;
+
             Canvas.drawGUI();
             Game.init();
             base.OnLoad(e);
@@ -75,6 +75,12 @@ namespace BetterGameEngine
             if(e.Button == MouseButtons.Left)
             {
                 InputManager.syncMouseInputs(e, 0);
+                GuiComponent comp = Canvas.Layers[Canvas.activeLayer].componentInRange;
+                if(comp != null)
+                {
+                    comp.trigger();
+                    Canvas.drawGUI();
+                }
             }
             if(e.Button == MouseButtons.Right)
             {
@@ -92,6 +98,16 @@ namespace BetterGameEngine
             {
                 InputManager.syncMouseUp(e, 1);
             }
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            InputManager.mousePosition.x = e.X;
+            InputManager.mousePosition.y = e.Y;
+
+            Canvas.Layers[Canvas.activeLayer].mouseInRange();
+
+            //Console.WriteLine($"mx: {InputManager.mousePosition.x}, my: {InputManager.mousePosition.y}");
         }
     }
 }

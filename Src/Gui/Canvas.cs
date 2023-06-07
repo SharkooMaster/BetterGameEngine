@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BetterGameEngine.MathB;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace BetterGameEngine.Gui
             get { return ActiveLayer; }
             set
             {
+                Layers[value].sortComponents();
                 ActiveLayer = value;
             }
         }

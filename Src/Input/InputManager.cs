@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BetterGameEngine.MathB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
@@ -12,6 +13,8 @@ namespace BetterGameEngine.Input
     {
         public static List<InputKey> inputKeys = new List<InputKey>();
         public static List<InputKey> activeKeys = new List<InputKey>();
+
+        public static Vector2 mousePosition = new Vector2(0, 0);
 
         public static List<string> contexts = new List<string>();
         public static bool activeContextUpdated = false;
