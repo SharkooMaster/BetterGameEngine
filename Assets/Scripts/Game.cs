@@ -1,7 +1,7 @@
 ﻿using BetterGameEngine.Audio;
 using BetterGameEngine.Gui;
 using BetterGameEngine.Input;
-using BetterGameEngine.Src.Gui.Components;
+using BetterGameEngine.Gui.Components;
 using BetterGameEngine.Utils;
 using System;
 using System.Collections.Generic;
@@ -179,6 +179,11 @@ namespace BetterGameEngine.Assets.Scripts
             startGameBtn.trigger = () => { Canvas.activeLayer = 1; };
             main.components.Add(startGameBtn);
 
+            BGE_Slider slider = new BGE_Slider(Canvas.BGE_GREEN, Color.White);
+            slider.dock = GuiLayer.dock.BC;
+            slider.margin_B = 20;
+            main.components.Add(slider);
+
             Canvas.Layers.Add(main);
             Canvas.activeLayer = 0;
 
@@ -233,7 +238,7 @@ namespace BetterGameEngine.Assets.Scripts
             AudioManager.audioBoards.Add(menueAudio);
             AudioManager.activeAudioBoard = 0;
 
-            AudioManager.audioBoards[AudioManager.activeAudioBoard].PLAY();
+            //AudioManager.audioBoards[AudioManager.activeAudioBoard].PLAY();
         }
     }
 }

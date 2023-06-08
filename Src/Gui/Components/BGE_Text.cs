@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterGameEngine.Src.Gui.Components
+namespace BetterGameEngine.Gui.Components
 {
     public class BGE_Text : GuiComponent
     {

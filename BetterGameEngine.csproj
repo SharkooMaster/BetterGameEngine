@@ -65,6 +65,7 @@
     <Compile Include="Src\Audio\AudioManager.cs" />
     <Compile Include="Src\Gui\Canvas.cs" />
     <Compile Include="Src\Gui\Components\BGE_ButtonFilled.cs" />
+    <Compile Include="Src\Gui\Components\BGE_Slider.cs" />
     <Compile Include="Src\Gui\Components\BGE_Text.cs" />
     <Compile Include="Src\Gui\GuiComponent.cs" />
     <Compile Include="Src\Gui\GuiLayer.cs" />
