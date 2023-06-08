@@ -26,6 +26,7 @@ namespace BetterGameEngine
         protected override void OnResizeEnd(EventArgs e)
         {
             Canvas.GRAPHICS = CreateGraphics();
+            Canvas.GRAPHICS.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Canvas.WIDTH = (int)Canvas.GRAPHICS.VisibleClipBounds.Width;
             Canvas.HEIGHT = (int)Canvas.GRAPHICS.VisibleClipBounds.Height;
 
@@ -36,17 +37,20 @@ namespace BetterGameEngine
         protected override void OnLoad(EventArgs e)
         {
             Canvas.GRAPHICS = CreateGraphics();
+            Canvas.GRAPHICS.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Canvas.WIDTH = (int)Canvas.GRAPHICS.VisibleClipBounds.Width;
             Canvas.HEIGHT = (int)Canvas.GRAPHICS.VisibleClipBounds.Height;
 
             Canvas.drawGUI();
-            Game.init();
+            Game.rockPaperScissors();
+            //Game.init();
             base.OnLoad(e);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             Canvas.GRAPHICS = CreateGraphics();
+            Canvas.GRAPHICS.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Canvas.WIDTH = (int)Canvas.GRAPHICS.VisibleClipBounds.Width;
             Canvas.HEIGHT = (int)Canvas.GRAPHICS.VisibleClipBounds.Height;
 

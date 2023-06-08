@@ -27,11 +27,12 @@ namespace BetterGameEngine.Gui
             }
         }
 
+        public static Color backgroundColor = uColor.fromHex("#2C3241");
         public static void drawGUI()
         {
-            GRAPHICS.Clear(uColor.fromHex("#2C3241"));
+            GRAPHICS.Clear(backgroundColor);
             // Render game here;
-            if(activeLayer != -1)
+            if(activeLayer != -1 && Layers.Count != 0)
             {
                 Layers[ActiveLayer].render();
             }

@@ -3,6 +3,8 @@ using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,10 +47,10 @@ namespace BetterGameEngine.Gui
 
         public Color backgroundColor;
 
-        public int roundedRadius_TL;
-        public int roundedRadius_TR;
-        public int roundedRadius_BL;
-        public int roundedRadius_BR;
+        public int roundedRadius_TL = 0;
+        public int roundedRadius_TR = 0;
+        public int roundedRadius_BL = 0;
+        public int roundedRadius_BR = 0;
         public int roundedRadius
         {
             set
@@ -160,47 +162,48 @@ namespace BetterGameEngine.Gui
 
         private void genRect()
         {
-            if(roundedRadius_TL != 0)
-            {
-                rect.X = (int)position.x + roundedRadius_TL;
-                rect.Y = (int)position.y + roundedRadius_TL;
-                rect.Width  -= roundedRadius_TL;
-                rect.Height -= roundedRadius_TL;
-                Canvas.GRAPHICS.FillEllipse(
-                    new SolidBrush(backgroundColor),
-                    rect.X - roundedRadius_TL,
-                    rect.Y - roundedRadius_TL,
-                    roundedRadius_TL + roundedRadius_TL,
-                    roundedRadius_TL + roundedRadius_TL
-                );
+            SolidBrush bg = new SolidBrush(backgroundColor);
 
-                Canvas.GRAPHICS.FillRectangle(
-                    new SolidBrush(backgroundColor),
-                    new Rectangle(rect.X - roundedRadius_TL, rect.Y, roundedRadius_TL, rect.Height)
-                );
+            GraphicsPath path = new GraphicsPath();
+            List<PointF> points = new List<PointF>();
 
-                Canvas.GRAPHICS.FillRectangle(
-                    new SolidBrush(backgroundColor),
-                    new Rectangle(rect.X, rect.Y - roundedRadius_TL, rect.Width, roundedRadius_TL)
-                );
-            }
-            if(roundedRadius_TR != 0)
-            {
-            }
-            if(roundedRadius_BL != 0)
-            {
-            }
-            if(roundedRadius_BR != 0)
-            {
-            }
+            points.Add(new PointF(position.x, position.y + roundedRadius_TL));
+            points.Add(new PointF(position.x + roundedRadius_TL, position.y + roundedRadius_TL));
+            points.Add(new PointF(position.x + roundedRadius_TL, position.y));
+
+            points.Add(new PointF(position.x + width - roundedRadius_TR, position.y));
+            points.Add(new PointF(position.x + width - roundedRadius_TR, position.y + roundedRadius_TR));
+            points.Add(new PointF(position.x + width, position.y + roundedRadius_TR));
+
+            points.Add(new PointF(position.x + width, position.y + height - roundedRadius_BR));
+            points.Add(new PointF(position.x + width - roundedRadius_BR, position.y + height - roundedRadius_BR));
+            points.Add(new PointF(position.x + width - roundedRadius_BR, position.y + height));
+
+            points.Add(new PointF(position.x + roundedRadius_BL, position.y + height));
+            points.Add(new PointF(position.x + roundedRadius_BL, position.y + height - roundedRadius_BL));
+            points.Add(new PointF(position.x, position.y + height - roundedRadius_BL));
+
+            path.AddLines(points.ToArray());
+            Canvas.GRAPHICS.FillPath(bg, path);
+
+            Canvas.GRAPHICS.FillEllipse(bg, position.x, position.y, roundedRadius_TL * 2, roundedRadius_TL * 2);
+            Canvas.GRAPHICS.FillEllipse(bg, position.x + width - (roundedRadius_TR * 2), position.y, roundedRadius_TR * 2, roundedRadius_TR * 2);
+            Canvas.GRAPHICS.FillEllipse(bg, position.x + width - (roundedRadius_BR * 2), position.y + height - (roundedRadius_BR * 2), roundedRadius_BR * 2, roundedRadius_BR * 2);
+            Canvas.GRAPHICS.FillEllipse(bg, position.x, position.y + height - (roundedRadius_BL * 2), roundedRadius_BL * 2, roundedRadius_BL * 2);
         }
 
         public void draw()
         {
             parentScale = new Vector2(Canvas.WIDTH, Canvas.HEIGHT);
             rect = new Rectangle((int)position.x, (int)position.y, width, height);
-            genRect();
-            Canvas.GRAPHICS.FillRectangle(new SolidBrush(backgroundColor), Rectangle.Round(rect));
+            if(roundedRadius_TL == 0 && roundedRadius_TR == 0 &&  roundedRadius_BL == 0 &&  roundedRadius_BR == 0)
+            {
+                Canvas.GRAPHICS.FillRectangle(new SolidBrush(backgroundColor), Rectangle.Round(rect));
+            }
+            else
+            {
+                genRect();
+            }
             customDraw();
 
             int i = 0;

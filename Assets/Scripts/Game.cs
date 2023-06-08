@@ -1,6 +1,7 @@
 ﻿using BetterGameEngine.Gui;
 using BetterGameEngine.Input;
 using BetterGameEngine.Src.Gui.Components;
+using BetterGameEngine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -60,79 +61,166 @@ namespace BetterGameEngine.Assets.Scripts
             // Draw GUI
             GuiLayer menue = new GuiLayer();
 
-            BGE_ButtonFilled bGE_ButtonFilled = new BGE_ButtonFilled(Canvas.BGE_RED, Canvas.BGE_RED_HOVER);
-            bGE_ButtonFilled.dock = GuiLayer.dock.TL;
-
-            BGE_ButtonFilled bGE_ButtonFilled4 = new BGE_ButtonFilled(Canvas.BGE_ORANGE, Canvas.BGE_ORANGE_HOVER);
-            bGE_ButtonFilled4.dock = GuiLayer.dock.TL;
-            bGE_ButtonFilled4.margin_T = 70;
-
-            BGE_ButtonFilled bGE_ButtonFilled2 = new BGE_ButtonFilled(Canvas.BGE_YELLOW, Canvas.BGE_YELLOW_HOVER);
-            bGE_ButtonFilled2.dock = GuiLayer.dock.TC;
-
-            BGE_ButtonFilled bGE_ButtonFilled3 = new BGE_ButtonFilled(Canvas.BGE_GREEN, Canvas.BGE_GREEN_HOVER);
-            bGE_ButtonFilled3.dock = GuiLayer.dock.TC;
-            bGE_ButtonFilled3.margin_T = 70;
-
-            BGE_ButtonFilled bGE_ButtonFilled5 = new BGE_ButtonFilled(Canvas.BGE_BLUE, Canvas.BGE_BLUE_HOVER);
-            bGE_ButtonFilled5.dock = GuiLayer.dock.TR;
-
-            BGE_ButtonFilled bGE_ButtonFilled6 = new BGE_ButtonFilled(Canvas.BGE_PINK, Canvas.BGE_PINK_HOVER);
-            bGE_ButtonFilled6.dock = GuiLayer.dock.TR;
-            bGE_ButtonFilled6.margin_T = 70;
-
-            BGE_ButtonFilled bGE_ButtonFilled7 = new BGE_ButtonFilled(Canvas.BGE_PURPLE, Canvas.BGE_PURPLE_HOVER);
-            bGE_ButtonFilled7.dock = GuiLayer.dock.CL;
-
-            BGE_ButtonFilled bGE_ButtonFilled8 = new BGE_ButtonFilled(Canvas.BGE_WHITE, Canvas.BGE_WHITE_HOVER);
-            bGE_ButtonFilled8.dock = GuiLayer.dock.C;
-            bGE_ButtonFilled8.roundedRadius_TL = 10;
-            bGE_ButtonFilled8.roundedRadius_TR = 10;
+            BGE_ButtonFilled bGE_ButtonFilled = new BGE_ButtonFilled(Canvas.BGE_WHITE, Canvas.BGE_WHITE_HOVER, "Layer 1");
+            bGE_ButtonFilled.dock = GuiLayer.dock.C;
+            bGE_ButtonFilled.roundedRadius = 10;
+            bGE_ButtonFilled.trigger = () => { Canvas.activeLayer = 1; };
 
             menue.components.Add(bGE_ButtonFilled);
-            menue.components.Add(bGE_ButtonFilled2);
-            menue.components.Add(bGE_ButtonFilled3);
-            menue.components.Add(bGE_ButtonFilled4);
-            menue.components.Add(bGE_ButtonFilled5);
-            menue.components.Add(bGE_ButtonFilled6);
-            menue.components.Add(bGE_ButtonFilled7);
-            menue.components.Add(bGE_ButtonFilled8);
             Canvas.Layers.Add(menue);
 
             GuiLayer settings = new GuiLayer();
 
-            GuiComponent header = new GuiComponent();
-            header.width = 300;
-            header.height = 100;
-            header.backgroundColor = Color.Blue;
-            header.dock = GuiLayer.dock.BL;
+            BGE_Text titleSettings = new BGE_Text("Settings", new SolidBrush(Canvas.BGE_WHITE));
+            titleSettings.dock = GuiLayer.dock.TC;
 
-            GuiComponent header2 = new GuiComponent();
-            header2.width = 300;
-            header2.height = 100;
-            header2.backgroundColor = Color.Blue;
-            header2.dock = GuiLayer.dock.C;
-            header2.padding = 0;
-            header2.trigger = () => { Canvas.ActiveLayer = 0; };
-            header2.onHover = () => { header2.backgroundColor = Color.Red; };
-            header2.onHoverEnd = () => { header2.backgroundColor = Color.Blue; };
+            BGE_ButtonFilled btnLayer1 = new BGE_ButtonFilled(Canvas.BGE_RED, Canvas.BGE_RED_HOVER);
+            btnLayer1.dock = GuiLayer.dock.C;
+            btnLayer1.trigger = () => { Canvas.activeLayer = 0; };
 
-            GuiComponent headerText = new GuiComponent();
-            headerText.width = 100;
-            headerText.height = 30;
-            headerText.backgroundColor = Color.Transparent;
-            headerText.dock = GuiLayer.dock.C;
-            headerText.customDraw = () =>
-            {
-                Canvas.GRAPHICS.DrawString("Header", new Font(FontFamily.GenericSansSerif, 20.0f, FontStyle.Bold), Brushes.White, headerText.position.x, headerText.position.y);
-            };
-            header2.children.Add(headerText);
-
-            settings.components.Add(header);
-            settings.components.Add(header2);
+            settings.components.Add(titleSettings);
+            settings.components.Add(btnLayer1);
 
             Canvas.Layers.Add(settings);
             Canvas.activeLayer = 0;
+        }
+
+        public static int rps_random;
+        public static BGE_Text rps_status;
+        public static BGE_Text rps_text;
+        public static void setRpsRandom()
+        {
+            rps_random = new Random().Next(0, 3);
+
+            switch (rps_random)
+            {
+                case 0:
+                    rps_text._inner = "ROCK";
+                    break;
+                case 1:
+                    rps_text._inner = "PAPER";
+                    break;
+                case 2:
+                    rps_text._inner = "SCISSORS";
+                    break;
+            }
+            Canvas.drawGUI();
+        }
+
+        public static void RpsValidateWin(int x)
+        {
+            switch (rps_random)
+            {
+                case 0:
+                    if(x == 0)
+                    {
+                        rps_status._inner = "TIE";
+                        rps_status._bg = Canvas.BGE_BLUE;
+                    }else if(x == 1)
+                    {
+                        rps_status._inner = "YOU WON";
+                        rps_status._bg = Canvas.BGE_GREEN;
+                    }
+                    else
+                    {
+                        rps_status._inner = "YOU LOST";
+                        rps_status._bg = Canvas.BGE_RED;
+                    }
+                    break;
+                case 1:
+                    if(x == 0)
+                    {
+                        rps_status._inner = "YOU LOST";
+                        rps_status._bg = Canvas.BGE_RED;
+                    }else if(x == 1)
+                    {
+                        rps_status._inner = "TIE";
+                        rps_status._bg = Canvas.BGE_BLUE;
+                    }
+                    else
+                    {
+                        rps_status._inner = "YOU WON";
+                        rps_status._bg = Canvas.BGE_GREEN;
+                    }
+                    break;
+                case 2:
+                    if(x == 0)
+                    {
+                        rps_status._inner = "YOU WON";
+                        rps_status._bg = Canvas.BGE_GREEN;
+                    }else if(x == 1)
+                    {
+                        rps_status._inner = "YOU LOST";
+                        rps_status._bg = Canvas.BGE_RED;
+                    }
+                    else
+                    {
+                        rps_status._inner = "TIE";
+                        rps_status._bg = Canvas.BGE_BLUE;
+                    }
+                    break;
+            }
+            Canvas.drawGUI();
+        }
+
+        public static void rockPaperScissors()
+        {
+            GuiLayer main = new GuiLayer();
+            Canvas.backgroundColor = uColor.fromHex("#000000");
+
+            BGE_Text title = new BGE_Text("RPS", new SolidBrush(Canvas.BGE_WHITE));
+            title.dock = GuiLayer.dock.TC;
+            main.components.Add(title);
+
+            BGE_ButtonFilled startGameBtn = new BGE_ButtonFilled(Canvas.BGE_WHITE, Canvas.BGE_BLUE_HOVER, "Start");
+            startGameBtn.dock = GuiLayer.dock.C;
+            startGameBtn.roundedRadius = 10;
+            startGameBtn.trigger = () => { Canvas.activeLayer = 1; };
+            main.components.Add(startGameBtn);
+
+            Canvas.Layers.Add(main);
+            Canvas.activeLayer = 0;
+
+            GuiLayer game = new GuiLayer();
+
+            rps_status = new BGE_Text("RPS", new SolidBrush(Canvas.BGE_WHITE));
+            rps_status.dock = GuiLayer.dock.TC;
+            game.components.Add(rps_status);
+
+            BGE_ButtonFilled rockBtn = new BGE_ButtonFilled(Canvas.BGE_PURPLE, Canvas.BGE_YELLOW_HOVER, "ROCK");
+            rockBtn.dock = GuiLayer.dock.CL;
+            rockBtn.roundedRadius = 10;
+            rockBtn.margin_L = 20;
+            rockBtn.trigger = () => {
+                setRpsRandom();
+                RpsValidateWin(0);
+            };
+            game.components.Add(rockBtn);
+
+            BGE_ButtonFilled paperBtn = new BGE_ButtonFilled(Canvas.BGE_PURPLE, Canvas.BGE_YELLOW_HOVER, "PAPER");
+            paperBtn.dock = GuiLayer.dock.C;
+            paperBtn.roundedRadius = 10;
+            paperBtn.trigger = () => {
+                setRpsRandom();
+                RpsValidateWin(1);
+            };
+            game.components.Add(paperBtn);
+
+            BGE_ButtonFilled scissorsBtn = new BGE_ButtonFilled(Canvas.BGE_PURPLE, Canvas.BGE_YELLOW_HOVER, "SCISSORS");
+            scissorsBtn.dock = GuiLayer.dock.CR;
+            scissorsBtn.roundedRadius = 10;
+            scissorsBtn.margin_R = 20;
+            scissorsBtn.trigger = () => {
+                setRpsRandom();
+                RpsValidateWin(2);
+            };
+            game.components.Add(scissorsBtn);
+
+            rps_text = new BGE_Text("Choose", new SolidBrush(Canvas.BGE_WHITE));
+            rps_text.dock = GuiLayer.dock.BC;
+            game.components.Add(rps_text);
+
+            Canvas.Layers.Add(game);
         }
     }
 }
