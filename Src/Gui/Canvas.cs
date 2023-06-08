@@ -24,6 +24,7 @@ namespace BetterGameEngine.Gui
             {
                 Layers[value].sortComponents();
                 ActiveLayer = value;
+                drawGUI();
             }
         }
 

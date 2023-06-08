@@ -52,7 +52,7 @@ namespace BetterGameEngine.Gui
                    InputManager.mousePosition.y > componentRange.ElementAt(i).Key.y &&
                    InputManager.mousePosition.y < componentRange.ElementAt(i).Value.y)
                 {
-                    //Console.WriteLine($"in range {i}");
+                    Console.WriteLine($"in range {i}");
                     components[i].onHover();
                     if(componentInRange == null)
                     {
@@ -62,7 +62,7 @@ namespace BetterGameEngine.Gui
                 }
                 else
                 {
-                    //Console.WriteLine($"out of range {i}");
+                    Console.WriteLine($"out of range {i}");
                     if(componentInRange != null && componentInRange.id == components[i].id)
                     {
                         componentInRange.onHoverEnd();
@@ -73,9 +73,15 @@ namespace BetterGameEngine.Gui
             }
         }
 
-        public void render()
+        public bool isLoaded = false;
+        public void load()
         {
             sortComponents();
+            isLoaded = true;
+        }
+
+        public void render()
+        {
             int i = 0;
             foreach (var component in components)
             {
@@ -83,6 +89,10 @@ namespace BetterGameEngine.Gui
                 component.calculatePosition();
                 component.draw();
                 i++;
+            }
+            if(!isLoaded)
+            {
+                load();
             }
         }
     }

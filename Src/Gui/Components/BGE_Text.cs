@@ -10,7 +10,18 @@ namespace BetterGameEngine.Src.Gui.Components
 {
     public class BGE_Text : GuiComponent
     {
-        public string _inner = "";
+        private string INNER = "";
+        public string _inner
+        {
+            get { return INNER; }
+            set
+            {
+                INNER = value;
+                Canvas.GRAPHICS.FillRectangle(new SolidBrush(Canvas.backgroundColor), Rectangle.Round(rect));
+                customDraw();
+            }
+        }
+
         public int _width = 240;
         public int _height = 55;
         public Color _bg = Color.Transparent;
@@ -25,11 +36,11 @@ namespace BetterGameEngine.Src.Gui.Components
             customDraw = () =>
             {
                 StringFormat stringFormat = new StringFormat();
-                //stringFormat.Alignment = StringAlignment.Center;
-                //stringFormat.LineAlignment = StringAlignment.Center;
+                stringFormat.Alignment = StringAlignment.Center;
+                stringFormat.LineAlignment = StringAlignment.Center;
 
                 Canvas.GRAPHICS.DrawString(
-                    _inner,
+                    INNER,
                     new Font(FontFamily.GenericSansSerif, 20.0f, FontStyle.Bold),
                     new SolidBrush(_bg), rect, stringFormat
                 );

@@ -32,6 +32,12 @@ namespace BetterGameEngine.Gui
         public Trigger onHover;
         public Trigger onHoverEnd;
 
+        public void eventOnTrigger()
+        {
+            trigger();
+            draw();
+        }
+
         // Design variables
         public enum Display
         {
@@ -194,6 +200,7 @@ namespace BetterGameEngine.Gui
 
         public void draw()
         {
+            Console.WriteLine("drawing comp");
             parentScale = new Vector2(Canvas.WIDTH, Canvas.HEIGHT);
             rect = new Rectangle((int)position.x, (int)position.y, width, height);
             if(roundedRadius_TL == 0 && roundedRadius_TR == 0 &&  roundedRadius_BL == 0 &&  roundedRadius_BR == 0)

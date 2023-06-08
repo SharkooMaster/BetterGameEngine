@@ -104,7 +104,7 @@ namespace BetterGameEngine.Assets.Scripts
                     rps_text._inner = "SCISSORS";
                     break;
             }
-            Canvas.drawGUI();
+            //Canvas.drawGUI();
         }
 
         public static void RpsValidateWin(int x)
@@ -160,7 +160,7 @@ namespace BetterGameEngine.Assets.Scripts
                     }
                     break;
             }
-            Canvas.drawGUI();
+            //Canvas.drawGUI();
         }
 
         public static void rockPaperScissors()

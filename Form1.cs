@@ -82,8 +82,12 @@ namespace BetterGameEngine
                 GuiComponent comp = Canvas.Layers[Canvas.activeLayer].componentInRange;
                 if(comp != null)
                 {
-                    comp.trigger();
-                    Canvas.drawGUI();
+                    comp.eventOnTrigger();
+                    //Canvas.drawGUI();
+                    if (Canvas.Layers[Canvas.activeLayer].isLoaded)
+                    {
+                        //Canvas.Layers[Canvas.activeLayer].componentInRange.draw();
+                    }
                 }
             }
             if(e.Button == MouseButtons.Right)
