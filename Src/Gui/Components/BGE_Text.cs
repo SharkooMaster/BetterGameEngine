@@ -24,14 +24,24 @@ namespace BetterGameEngine.Src.Gui.Components
 
         public int _width = 240;
         public int _height = 55;
-        public Color _bg = Color.Transparent;
+        public Color bg = Color.Transparent;
+        public Color _bg
+        {
+            get { return bg; }
+            set
+            {
+                bg = value;
+                Canvas.GRAPHICS.FillRectangle(new SolidBrush(Canvas.backgroundColor), Rectangle.Round(rect));
+                customDraw();
+            }
+        }
 
         public BGE_Text(string inner, Brush color)
         {
             _inner = inner;
             width = _width;
             height = _height;
-            _bg = ((SolidBrush)color).Color;
+            bg = ((SolidBrush)color).Color;
 
             customDraw = () =>
             {
@@ -42,7 +52,7 @@ namespace BetterGameEngine.Src.Gui.Components
                 Canvas.GRAPHICS.DrawString(
                     INNER,
                     new Font(FontFamily.GenericSansSerif, 20.0f, FontStyle.Bold),
-                    new SolidBrush(_bg), rect, stringFormat
+                    new SolidBrush(bg), rect, stringFormat
                 );
             };
         }

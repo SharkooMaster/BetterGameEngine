@@ -1,4 +1,5 @@
-﻿using BetterGameEngine.Gui;
+﻿using BetterGameEngine.Audio;
+using BetterGameEngine.Gui;
 using BetterGameEngine.Input;
 using BetterGameEngine.Src.Gui.Components;
 using BetterGameEngine.Utils;
@@ -221,6 +222,18 @@ namespace BetterGameEngine.Assets.Scripts
             game.components.Add(rps_text);
 
             Canvas.Layers.Add(game);
+
+            // AUDIO
+            AudioBoard menueAudio = new AudioBoard();
+
+            AudioTrack bgMusic_menue = new AudioTrack("M:\\BetterGameEngine\\Assets\\Audio\\bgMenue.wav");
+            bgMusic_menue.volume = 100;
+
+            menueAudio.tracks.Add(bgMusic_menue);
+            AudioManager.audioBoards.Add(menueAudio);
+            AudioManager.activeAudioBoard = 0;
+
+            AudioManager.audioBoards[AudioManager.activeAudioBoard].PLAY();
         }
     }
 }
